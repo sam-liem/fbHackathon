@@ -12,13 +12,13 @@ $(document).ready(function() {
 			"<a class=\"snippetParseButton\" role=\"button\" href=\"#\" style=\"background-image:url(\'" +iconImg+ "\')\"></a>"
 		);
 		
-	    buttonRow.prepend(ourButton);
-	    console.log("button added");
+		buttonRow.prepend(ourButton);
+		console.log("button added");
 
 		$(".snippetParseButton").on("click",function(){
-	    	console.log("pressed button");
-	    	beginWidget();
-	  	});
+			console.log("pressed button");
+			beginWidget();
+		});
 	}
 
 	function beginWidget() {
@@ -45,31 +45,31 @@ $(document).ready(function() {
 			var selected = 'latex'
 			$('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
 			$(".widgetMenuPreview").on("click",function(){
-	    		console.log("toggled preview");
-	    		//togglePreview();
-	  		});
+				console.log("toggled preview");
+				//togglePreview();
+			});
 
 			$('.widgetMenuForm').change(function(){
-            	selected = $("input[name='optradio']:checked").attr('id');
-            	if(selected=='latex'){
-            		$(".widgetMenuPreview").show();
-            	}else{
-            		$(".widgetMenuPreview").hide();
-            	}
-            	console.log(selected);
-            	//changeInput(selected);
-    		});
+				selected = $("input[name='optradio']:checked").attr('id');
+				if(selected=='latex'){
+					$(".widgetMenuPreview").show();
+				}else{
+					$(".widgetMenuPreview").hide();
+				}
+				console.log(selected);
+				//changeInput(selected);
+			});
 			console.log("prepended");
 			//call preview-code
 			//initialize()
 		}
 	}
 
-  	insertWidget();
+	insertWidget();
 	
 	$(window).resize(function() {
-  		if(!$(".snippetParseButton")[0]){
-  			insertWidget()
-  		}
+		if(!$(".snippetParseButton")[0]){
+			insertWidget()
+		}
 	});
 });
