@@ -3,6 +3,8 @@ console.log("Preview code loaded");
 const lineHeight = 17;
 const letterWidth = 8.5;
 const padding = 55;
+var cursorLine = 1;
+var cursorLetter = 0;
 
 // active should be true iff code inputting formatting selected
 // const active = false;
@@ -36,6 +38,7 @@ $(document).ready(function() {
     $('._5rpb').prepend(pre);
     $('._5rpb').prepend(cursor);
     format(inputText(), 'js');
+    setCursorPos(1, 0);
   }
 
   function format(inputText, lang) {
@@ -47,7 +50,7 @@ $(document).ready(function() {
     var pre = $("#code-preview");
     var formattedCode = PR.prettyPrintOne(code, lang, true);
     pre.html(formattedCode);
-    setCursorPos(1, 0);
+    // setCursorPos(1, 0);
   }
 
   // Returns an array on input text one line for each input
@@ -75,15 +78,51 @@ $(document).ready(function() {
     } else {
       letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
     }
-    console.log('Line clicked', lineClicked);
-    console.log('Letter clicked', letterClicked);
+
     setCursorPos(lineClicked, letterClicked);
   });
 
   function setCursorPos(line, letter) {
+    var inputLines = $('._1mf._1mj');
+    if (line > inputLines.length) {
+      line = inputLines.length;
+    }
+    if (line < 1) {
+      line = 1;
+    }
+    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML
+    if (letter > lineText.length) {
+      letter = lineText.length;
+    }
+    if (letter < 0) {
+      letter = 0;
+    }
+
+    cursorLine = line;
+    cursorLetter = letter;
+
     y = (line - 1) * lineHeight + 3;
     x = padding + letter * letterWidth;
     $('.blinking-cursor').css({top: y, left: x});
   }
+
+  $("._5rpu").on('keydown', function(e) {
+    switch(e.which) {
+      case 37: // left
+      setCursorPos(cursorLine, cursorLetter - 1);
+      break;
+      case 38: // up
+      setCursorPos(cursorLine - 1, cursorLetter);
+      break;
+      case 39: // right
+      setCursorPos(cursorLine, cursorLetter + 1);
+      break;
+      case 40: // down
+      setCursorPos(cursorLine + 1, cursorLetter);
+      break;
+      default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+  });
 
 });
