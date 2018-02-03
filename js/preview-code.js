@@ -122,20 +122,31 @@ $(document).ready(function() {
   enterField.firstChild.style.backgroundColor = "#303640";
   enterField.firstChild.style.marginRight = "1%";
 
-  $('._5rpu').click(function (e) { //Offset mouse Position
-    var posX = $(this).offset().left,
-        posY = $(this).offset().top;
-    var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
-    var letterClicked;
-    if (Math.floor((e.pageX - posX)) < padding) {
-      letterClicked = 0;
-    } else {
-      letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
-    }
+  // $('._5rpu').click(function (e) { //Offset mouse Position
+  //   var posX = $(this).offset().left,
+  //       posY = $(this).offset().top;
+  //   var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
+  //   var letterClicked;
+  //   if (Math.floor((e.pageX - posX)) < padding) {
+  //     letterClicked = 0;
+  //   } else {
+  //     letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
+  //   }
+
+  //   console.log("Clicked", lineClicked + ", " + letterClicked);
+  //   setCursorPos(lineClicked, letterClicked);
+  // });
+
+  $('._5rpu').on('click', '._1mf._1mj', function(e) {
+    const posX = $(this).offset().left;
+    const posY = $(this).offset().top;
+
+    const lineClicked = $('._1mf._1mj').index($(this)) + 1;
+    const letterClicked = Math.floor(((e.pageX - posX) + (letterWidth/2) ) / letterWidth);
 
     console.log("Clicked", lineClicked + ", " + letterClicked);
     setCursorPos(lineClicked, letterClicked);
-  });
+  })
 
   function setCursorPos(line, letter) {
     var inputLines = $('._1mf._1mj');
@@ -158,7 +169,7 @@ $(document).ready(function() {
     cursorLetter = letter;
 
     y = (line - 1) * lineHeight + 3;
-    x = padding + letter * letterWidth;
+    x = padding + letter * letterWidth - 1;
     $('.blinking-cursor').css({top: y, left: x});
   }
 
