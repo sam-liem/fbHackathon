@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+#code-preview {
+  position: absolute;
+  width: 100%;
+}
+._5rpu {
+  /*background-color: red;*/
+  font-family: 'Inconsolata', monospace;
+  padding-left: 55px;
+  opacity: 0;
+}
+
+.blinking-cursor {
+  font-weight: 100;
+  font-size: 12px;
+  color: white;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+  position: absolute;
+  z-index: 10;
+  font-weight: bold;
+}
+
+/*Blinking cursor*/
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: white;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: white;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: white;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: white;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: white;
+  }
+}
