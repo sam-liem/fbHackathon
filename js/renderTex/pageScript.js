@@ -4,8 +4,8 @@ function config() {
     showProcessingMessages: false,
     messageStyle: 'none',
     tex2jax: {
-      inlineMath: JSON.parse(scriptNode.getAttribute('inlineMath')),
-      displayMath: JSON.parse(scriptNode.getAttribute('displayMath')),
+      inlineMath: [['[tex]','[/tex]'],['$','$'], ['\[','\]']],// JSON.parse(scriptNode.getAttribute('inlineMath')),
+      displayMath: [['[t]','[/t]'],['$$',"$$"], ['\\(','\\)']],// JSON.parse(scriptNode.getAttribute('displayMath')),
       processClass: "mathjax",
       ignoreClass: "no-mathjax"
     }

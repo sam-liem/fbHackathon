@@ -48,15 +48,17 @@
             "js/preview-code.js"
           ]
         },
+
         {
           "matches": ["<all_urls>"],
           "all_frames": true,
           "js": ["js/renderTex/texify.js"],
           "run_at": "document_end"
         }
+
       ],
     "background": {
-      "scripts": ["js/renderTex/background.js", "js/renderTex/options.js"],
+      "scripts": ["js/renderTex/background.js"],
       "persistent": true
     },
       "permissions": [
