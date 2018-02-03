@@ -13,12 +13,18 @@ console.log("Preview code loaded");
 // }
 
 $(document).ready(function() {
+<<<<<<< HEAD
+=======
+  console.log("Messenger ready");
+  initialize();
+>>>>>>> a11409322ddb7bc0a2486f6bba85dd8798a57487
 
   // // To be called when language is selected
   // function formatInputBox() {
   //   // const  inputText();
   // }
 
+<<<<<<< HEAD
   // function format() {
   //   var langTag = "js"
   //   var code = `
@@ -57,8 +63,28 @@ $(document).ready(function() {
   //   inputText();
   //   //format();
   // });
-  var msgCount = 0
+  
+  // Must always run on document load for it to work
+  function initialize() {
+    var pre = document.createElement('pre');
+    pre.setAttribute("id", "code-preview");
+    pre.className = "prettyprint prettyprinted";
+    $('._5rpb').prepend(pre);
+    format(inputText(), 'js');
+  }
 
+  function format(inputText, lang) {
+    var code = '';
+    for (var i = 0; i < inputText.length; i++) {
+      code += inputText[i] + "\n";
+    }
+
+    var pre = $("#code-preview");
+    var formattedCode = PR.prettyPrintOne(code, lang, true);
+    pre.html(formattedCode);
+  }
+
+  var msgCount = 0
   function replaceCode() {
     var messengerBubbles = document.getElementsByClassName('_aok');
     var j = messengerBubbles.length-1;
@@ -85,11 +111,17 @@ $(document).ready(function() {
   }
 
   replaceCode();
-
   $('#js_1').on('DOMSubtreeModified', function(e) {
     if (!(document.getElementsByClassName('_aok').length == msgCount)) {
       console.log("new message");
       replaceCode();
     }
   });
+
+  $("._5rpu").on("DOMSubtreeModified",function(){
+    // console.log("Change in input detected");
+    format(inputText(), 'js');
+  });
+
+
 });

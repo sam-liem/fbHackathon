@@ -42,6 +42,7 @@
           ],
           "css": [
             "css/widgetInPage.css",
+            "css/code-input.css",
             "lib/css/google-code-prettify/prettify.css",
             "lib/css/google-code-prettify/skins/tranquil-heart.css"
           ],
