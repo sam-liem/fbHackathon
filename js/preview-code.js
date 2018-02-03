@@ -21,6 +21,7 @@ $(document).ready(function() {
     // const  inputText();
   }
 
+  // Must always run on document load for it to work
   function initialize() {
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
@@ -29,30 +30,18 @@ $(document).ready(function() {
   }
 
   function format(inputText) {
-    var langTag = "js"
     var code = '';
-    // var code = `
-    //     // Line
-    //     static const string VOILA = "Voila";
-    //     function testFunction() {
-    //       return "Hello World!";
-    //     }
-    //     // This is just some more test code
-    //     testFunction();
-    //     var test = "Yo!";
-    //     console.log("Printing some cool stuff");
-
-    //     // This should be the last line of code!
-    //   `
-
     for (var i = 0; i < inputText.length; i++) {
-      console.log(inputText[i]);
       code += inputText[i] + "\n";
     }
 
-    var pre = $("._5rpb #code-preview");
+    var pre = $("#code-preview");
     var formattedCode = PR.prettyPrintOne(code, 'py', true);
     pre.html(formattedCode);
+  }
+
+  function setLanguage(lang) {
+    $("#code-preview").addClass('lang-'+lang);
   }
 
   // Returns an array on input text one line for each input
@@ -67,6 +56,7 @@ $(document).ready(function() {
 
   $("._5rpb div").on("DOMSubtreeModified",function(){
     // console.log("Change in input detected");
+    setLanguage('js');
     format(inputText());
   });
 
