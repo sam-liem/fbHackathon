@@ -29,19 +29,15 @@ $(document).ready(function() {
     $('._5rpb').prepend(pre);
   }
 
-  function format(inputText) {
+  function format(inputText, lang) {
     var code = '';
     for (var i = 0; i < inputText.length; i++) {
       code += inputText[i] + "\n";
     }
 
     var pre = $("#code-preview");
-    var formattedCode = PR.prettyPrintOne(code, 'py', true);
+    var formattedCode = PR.prettyPrintOne(code, lang, true);
     pre.html(formattedCode);
-  }
-
-  function setLanguage(lang) {
-    $("#code-preview").addClass('lang-'+lang);
   }
 
   // Returns an array on input text one line for each input
@@ -56,8 +52,7 @@ $(document).ready(function() {
 
   $("._5rpb div").on("DOMSubtreeModified",function(){
     // console.log("Change in input detected");
-    setLanguage('js');
-    format(inputText());
+    format(inputText(), 'js');
   });
 
 });
