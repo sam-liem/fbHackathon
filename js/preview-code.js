@@ -1,7 +1,7 @@
 console.log("Preview code loaded");
 
 const lineHeight = 17;
-const letterWidth = 8.5;
+const letterWidth = 8.4;
 const padding = 42;
 var cursorLine = 1;
 var cursorLetter = 0;
@@ -127,12 +127,13 @@ $(document).ready(function() {
         posY = $(this).offset().top;
     var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
     var letterClicked;
-    if (Math.floor((e.pageX - posX)) < 55) {
+    if (Math.floor((e.pageX - posX)) < padding) {
       letterClicked = 0;
     } else {
       letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
     }
 
+    console.log("Clicked", lineClicked + ", " + letterClicked);
     setCursorPos(lineClicked, letterClicked);
   });
 
