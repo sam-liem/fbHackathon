@@ -52,8 +52,20 @@
             "js/preview-code.js",
             "js/renderTex/texify.js"
           ]
+        },
+
+        {
+          "matches": ["<all_urls>"],
+          "all_frames": true,
+          "js": ["js/renderTex/texify.js"],
+          "run_at": "document_end"
         }
+
       ],
+    "background": {
+      "scripts": ["js/renderTex/background.js"],
+      "persistent": true
+    },
       "permissions": [
         "https://www.messenger.com/t/*",
         "http://www.facebook.com/messages/t/*",
