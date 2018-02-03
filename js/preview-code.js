@@ -22,22 +22,25 @@ $(document).ready(function() {
 
   function format() {
     var langTag = "js"
-    // $("._5rpb").prepend( 
-    //   "<pre class='prettyprint linenums lang-" + langTag + "'>" + `
-    //     // Voila
-    //     static const string VOILA = "Voila";
-    //     function testFunction() {
-    //       return "Hello World!";
-    //     }
-    //     // This is just some more test code
-    //     testFunction();
-    //     var test = "Yo!";
-    //     console.log("Printing some cool stuff");
+    var code = `
+        // Voila
+        static const string VOILA = "Voila";
+        function testFunction() {
+          return "Hello World!";
+        }
+        // This is just some more test code
+        testFunction();
+        var test = "Yo!";
+        console.log("Printing some cool stuff");
 
-    //     // This should be the last line of code!
-    //   </pre>`
-    // )
-    // PR.prettyPrint();
+        // This should be the last line of code!
+      `
+
+    var pre = document.createElement('pre');
+    pre.className = "prettyprint prettyprinted";
+    var formattedCode = PR.prettyPrintOne(code, 'py', true);
+    pre.innerHTML = formattedCode;
+    $('._5rpb').prepend(pre);
   }
 
   // Returns an array on input text one line for each input
