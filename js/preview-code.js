@@ -119,6 +119,7 @@ $(document).ready(function() {
   var enterField = document.getElementsByClassName('_5irm')[0];
   enterField.style.marginLeft = "0px";
   enterField.firstChild.style.backgroundColor = "#303640";
+  enterField.firstChild.style.marginRight = "1%";
 
   $('._5rpu').click(function (e) { //Offset mouse Position
     var posX = $(this).offset().left,
