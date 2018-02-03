@@ -6,6 +6,7 @@ const padding = 55;
 var cursorLine = 1;
 var cursorLetter = 0;
 var textLength = 0;
+var numberOfLines = 0;
 
 // active should be true iff code inputting formatting selected
 // const active = false;
@@ -46,6 +47,7 @@ $(document).ready(function() {
     var inputLines = $("div._1mf._1mj");
     var line = inputLines.length;
     var letter = inputLines[line-1].firstChild.firstChild.innerHTML.length;
+    textLength = inputLines.text().length;
     setCursorPos(line, letter);
   }
 
@@ -58,7 +60,6 @@ $(document).ready(function() {
     var pre = $("#code-preview");
     var formattedCode = PR.prettyPrintOne(code, lang, true);
     pre.html(formattedCode);
-    // setCursorPos(1, 0);
   }
 
   // Returns an array on input text one line for each input
@@ -75,16 +76,44 @@ $(document).ready(function() {
     format(inputText(), 'js');
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
-    if (inputLines.text().length < textLength) {
+    var newCursorLine = cursorLine;
+    var newCursorLetter = cursorLetter;
+    if (inputLines.text().length + 1 == textLength) {
       // letter removed
-      setCursorPos(cursorLine, cursorLetter - 1);
-    } else if (inputLines.text().length > textLength) {
+      newCursorLetter = cursorLetter - 1;
+      textLength = inputLines.text().length;
+    } else if (inputLines.text().length - 1 == textLength) {
       // letter added
-      setCursorPos(cursorLine, cursorLetter + 1);
-    } else {
-      // TODO: Check if new line added or removed
-
+      newCursorLetter = cursorLetter + 1;
+      textLength = inputLines.text().length;
     }
+
+    if (inputLines.text().length == textLength) {
+      // Checks if line removed
+      if (numberOfLines > inputLines.length) {
+        console.log("removed line");
+        newCursorLine = cursorLine - 1;
+        newCursorLetter = inputLines[newCursorLine - 1].firstChild.firstChild.innerHTML.length;
+        numberOfLines = inputLines.length;
+      }
+      // Checks if line added
+      else if (numberOfLines < inputLines.length) {
+        console.log("added line");
+        newCursorLine = cursorLine + 1;
+        newCursorLetter = 0;
+        numberOfLines = inputLines.length;
+      }
+    }
+
+    // Update vars
+    cursorLine = newCursorLine;
+    cursorLetter = newCursorLetter;
+
+    // console.log('newTextLength', textLength);
+    console.log('newNumLines', numberOfLines);
+
+    setCursorPos(cursorLine, cursorLetter);
+
   });
 
   $('._5rpu').click(function (e) { //Offset mouse Position
@@ -117,6 +146,7 @@ $(document).ready(function() {
       letter = 0;
     }
 
+    // Update vars
     cursorLine = line;
     cursorLetter = letter;
 
@@ -141,7 +171,7 @@ $(document).ready(function() {
       break;
       default: return; // exit this handler for other keys
     }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
+    // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
 
 });
