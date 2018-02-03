@@ -37,7 +37,7 @@
           "run_at" :"document_end",
           "matches": [
             "https://www.messenger.com/t/*",
-            "http://www.facebook.com/messages/t/*"
+            "https://www.facebook.com/messages/t/*"
           ],
           "css": [
             "css/widgetInPage.css"
