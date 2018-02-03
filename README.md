@@ -1,2 +1,3 @@
-# Google Extension for Latex, Code, and HTML support in messengers (fbHackathon London 2018)
+# Facebook Hackathon London 2018
 Tom Miller, Pablo Gamito, Sam Liem
+Google Extension for Latex and Code support across messenging platforms
