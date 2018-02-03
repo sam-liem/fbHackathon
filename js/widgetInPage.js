@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	function insertWidget() {
 		//get location to insert
-		var iconImg = chrome.extension.getURL('images/logo_icon.png');
+		var iconImg = chrome.extension.getURL('images/icon.png');
 		var buttonRow = $("._39bj");
 		var ourButton = $("<li></li>").html(
 			"<a class=\"snippetParseButton\" role=\"button\" href=\"#\" style=\"background-image:url(\'" +iconImg+ "\')\"></a>"
