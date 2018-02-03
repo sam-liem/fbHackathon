@@ -48,6 +48,7 @@
           ],
           "js": [
             "lib/js/jquery-1.9.1.min.js",
+            "lib/js/bootstrap.min.js",
             "lib/js/google-code-prettify/run_prettify.js",
             "js/widgetInPage.js",
             "js/preview-code.js",
