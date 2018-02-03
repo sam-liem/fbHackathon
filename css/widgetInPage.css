@@ -1,6 +1,7 @@
 .snippetParseButton {
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 50%;
+    background-position: center;
 }
 
 .widgetMenu {
