@@ -27,6 +27,7 @@ $(document).ready(function() {
     pre.setAttribute("id", "code-preview");
     pre.className = "prettyprint prettyprinted";
     $('._5rpb').prepend(pre);
+    format(inputText(), 'js');
   }
 
   function format(inputText, lang) {
@@ -50,9 +51,11 @@ $(document).ready(function() {
     return inputs;
   }
 
-  $("._5rpb div").on("DOMSubtreeModified",function(){
+  $("._5rpu").on("DOMSubtreeModified",function(){
     // console.log("Change in input detected");
     format(inputText(), 'js');
   });
+
+  
 
 });
