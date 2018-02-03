@@ -30,6 +30,7 @@ $(document).ready(function() {
 
   function format(inputText) {
     var langTag = "js"
+    var code = '';
     // var code = `
     //     // Line
     //     static const string VOILA = "Voila";
@@ -46,6 +47,7 @@ $(document).ready(function() {
 
     for (var i = 0; i < inputText.length; i++) {
       console.log(inputText[i]);
+      code += inputText[i] + "\n";
     }
 
     var pre = $("._5rpb #code-preview");
