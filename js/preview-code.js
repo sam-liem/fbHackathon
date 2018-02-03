@@ -31,6 +31,7 @@ $(document).ready(function() {
 
   // Must always run on document load for it to work
   function initialize() {
+    $('._5rpu').css({opacity: 0;});
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
     pre.className = "prettyprint prettyprinted";
