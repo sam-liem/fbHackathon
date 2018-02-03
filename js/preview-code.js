@@ -5,6 +5,7 @@ const letterWidth = 8.5;
 const padding = 55;
 var cursorLine = 1;
 var cursorLetter = 0;
+var textLength = 0;
 
 // active should be true iff code inputting formatting selected
 // const active = false;
@@ -21,7 +22,12 @@ var cursorLetter = 0;
 $(document).ready(function() {
   console.log("Messenger ready");
   initialize();
-  
+
+  // To be called when language is selected
+  function formatInputBox() {
+    // const  inputText();
+  }
+
   // Must always run on document load for it to work
   function initialize() {
     var pre = document.createElement('pre');
@@ -33,7 +39,14 @@ $(document).ready(function() {
     $('._5rpb').prepend(pre);
     $('._5rpb').prepend(cursor);
     format(inputText(), 'js');
-    setCursorPos(1, 0);
+    initializeCursor();
+  }
+
+  function initializeCursor() {
+    var inputLines = $("div._1mf._1mj");
+    var line = inputLines.length;
+    var letter = inputLines[line-1].firstChild.firstChild.innerHTML.length;
+    setCursorPos(line, letter);
   }
 
   function format(inputText, lang) {
@@ -48,48 +61,31 @@ $(document).ready(function() {
     // setCursorPos(1, 0);
   }
 
-  var msgCount = 0
-  function replaceCode() {
-    var messengerBubbles = document.getElementsByClassName('_aok');
-    var j = messengerBubbles.length-1;
-    for (var i = j; i >= 0; --i) {
-      var messengerBubble = messengerBubbles[i];
-      if ((messengerBubble.innerHTML.includes("[js]")) && (messengerBubble.innerHTML.includes("[/js]"))) {
-        var span = messengerBubble.firstChild;
-        var message = span.innerHTML;
-
-        messengerBubble.innerHTML = '';
-
-        message = message.replace(/\[js\]/g,'');
-        message = message.replace(/\[\/js\]/g,'');
-        var pre = document.createElement('pre');
-        pre.className = "prettyprint prettyprinted";
-        var formattedCode = PR.prettyPrintOne(message, 'js', true);
-        pre.innerHTML = formattedCode;
-
-        // messengerBubble.appendChild(span);
-        messengerBubble.appendChild(pre);
-      }
-    }
-    msgCount = messengerBubbles.length;
+  // Returns an array on input text one line for each input
+  function inputText() {
+    var inputs = []
+    var inputLines = $("div._1mf._1mj");
+    inputLines.each(function() {
+      inputs.push($(this).text());
+    });
+    return inputs;
   }
 
-  replaceCode();
-  $('#js_1').on('DOMSubtreeModified', function(e) {
-    if (!(document.getElementsByClassName('_aok').length == msgCount)) {
-      console.log("new message");
-      replaceCode();
+  $("._5rpu").on("DOMSubtreeModified",function(){
+    format(inputText(), 'js');
+    // Checks if letter was added or remove
+    var inputLines = $('._1mf._1mj');
+    if (inputLines.text().length < textLength) {
+      // letter removed
+      setCursorPos(cursorLine, cursorLetter - 1);
+    } else if (inputLines.text().length > textLength) {
+      // letter added
+      setCursorPos(cursorLine, cursorLetter + 1);
+    } else {
+      // TODO: Check if new line added or removed
+
     }
   });
-
-  $("._5rpu").on("DOMSubtreeModified",function(){
-    // console.log("Change in input detected");
-    format(inputText(), 'js');
-    // Checks if letter had been inserted or deleted to update cursor
-
-  });
-
-  
 
   $('._5rpu').click(function (e) { //Offset mouse Position
     var posX = $(this).offset().left,
@@ -113,7 +109,7 @@ $(document).ready(function() {
     if (line < 1) {
       line = 1;
     }
-    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML
+    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
     if (letter > lineText.length) {
       letter = lineText.length;
     }
