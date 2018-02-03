@@ -85,7 +85,11 @@ $(document).ready(function() {
   $("._5rpu").on("DOMSubtreeModified",function(){
     // console.log("Change in input detected");
     format(inputText(), 'js');
+    // Checks if letter had been inserted or deleted to update cursor
+
   });
+
+  
 
   $('._5rpu').click(function (e) { //Offset mouse Position
     var posX = $(this).offset().left,
