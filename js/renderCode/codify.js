@@ -10,7 +10,6 @@ $(document).ready(function() {
       var messengerText = messengerBubble.firstChild.innerHTML
       var match = codeRegexPattern.exec(messengerText);
       if (match != null) {
-        console.log(messengerBubble.parentNode.className);
         messengerBubble.parentNode.style.padding = "0";
         messengerBubble.parentNode.style.borderRadius = "25px";
         messengerBubble.innerHTML = '';
@@ -35,7 +34,6 @@ $(document).ready(function() {
 
   $('#js_1').on('DOMSubtreeModified', function(e) {
     if (!(document.getElementsByClassName('_aok').length == msgCount)) {
-      console.log("new message");
       replaceCode();
     }
   });
