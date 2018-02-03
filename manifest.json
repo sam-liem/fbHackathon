@@ -28,8 +28,7 @@
     "homepage_url": "http://yourdomainhere.com/",
     "background": {
         "scripts": [
-          "js/jquery-1.9.1.min.js",
-          "js/widgetInPage.js"
+          "js/jquery-1.9.1.min.js"
         ]
     },
     "content_scripts": [
@@ -37,7 +36,8 @@
           "run_at" :"document_end",
           "matches": [
             "https://www.messenger.com/t/*",
-            "https://www.facebook.com/messages/t/*"
+            "https://www.facebook.com/messages/t/*",
+            "https://www.google.co.uk/*"
           ],
           "css": [
             "css/widgetInPage.css"
@@ -68,5 +68,5 @@
         "webRequestBlocking",
         "<all_urls>"
     ],
-    "web_accessible_resources" : ["js/renderTex/pageScript.js"]
+    "web_accessible_resources" : ["images/*.png","js/renderTex/pageScript.js"]
 }
