@@ -3,6 +3,7 @@
 #code-preview {
   position: absolute;
   width: 100%;
+  max-width: 100%;
 }
 ._5rpu {
   /*background-color: red;*/

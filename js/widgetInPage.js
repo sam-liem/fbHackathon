@@ -41,8 +41,8 @@ $(document).ready(function() {
 						<label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
 					</form>
 				</div>`
-			)
-			var selected = 'latex'
+			);
+			var selected = 'latex';
 			$('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
 			$(".widgetMenuPreview").on("click",function(){
 				console.log("toggled preview");

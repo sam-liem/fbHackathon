@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   // Must always run on document load for it to work
   function initialize() {
-    $('._5rpu').css({opacity: 0;});
+    $('._5rpu').css({opacity: 0});
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
     pre.className = "prettyprint prettyprinted";
@@ -182,19 +182,13 @@ $(document).ready(function() {
     // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
 
-  $(document).click(function(){
-    console.log($(this).parents('._4_j4').length);
-  })
-
   $(document).on('click', function(e) {
-    console.log("Clicked", e);
-    console.log("Clicked in", e.target.parents('._4_j4').length);
-    if (e.target.parents('._4_j4').length) {
+    var elem = document.getElementsByClassName('_4_j4')[0];
+    if (e.target == elem || elem.contains(e.target)) {
       $('.blinking-cursor').show();
     } else {
       $('.blinking-cursor').hide();
-    }
-    
+    }    
   });
 
 });

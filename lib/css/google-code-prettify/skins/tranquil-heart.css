@@ -6,6 +6,8 @@
   font-family: 'Inconsolata', monospace;
   border: 0 !important;
   margin: 0;
+  white-space: pre-wrap; 
+  word-wrap: break-word;
 }
 
 .pln {
