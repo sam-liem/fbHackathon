@@ -51,6 +51,7 @@
             "lib/js/google-code-prettify/prettify.js",
             "js/widgetInPage.js",
             "js/preview-code.js",
+            "js/renderCode/codify.js",
             "js/renderTex/texify.js"
           ]
         },
