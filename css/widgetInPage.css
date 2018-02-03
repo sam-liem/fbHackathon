@@ -1,6 +1,13 @@
-body {
-
-    background-image:url('chrome-extension://jahpnlbjnekeaajopahhdbgaodcofike/images/icon_19.png');
+.snippetParseButton {
     background-repeat: no-repeat;
-    background-size: 61px 1160px;
+    background-size: 100%;
+}
+
+.widgetMenu {
+  width: 100%;
+}
+
+.widgetMenuForm {
+  margin-left:auto;
+  margin-right:auto;
 }
