@@ -31,7 +31,7 @@ $(document).ready(function() {
 			active = true;
 			console.log("activate");
 			var textBox = $("._1mf._1mj");
-			$("._5irm._1_73").before(
+			$("._5irm").before(
 				`<div class="widgetMenu">
 					<form class="widgetMenuForm">
 						<label class="radio-inline"><input type="radio" name="optradio" id="latex" checked>Latex</label>
@@ -41,8 +41,8 @@ $(document).ready(function() {
 						<label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
 					</form>
 				</div>`
-			)
-			var selected = 'latex'
+			);
+			var selected = 'latex';
 			$('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
 			$(".widgetMenuPreview").on("click",function(){
 				console.log("toggled preview");
