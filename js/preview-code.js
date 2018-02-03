@@ -2,7 +2,7 @@ console.log("Preview code loaded");
 
 const lineHeight = 17;
 const letterWidth = 8.5;
-const padding = 55;
+const padding = 42;
 var cursorLine = 1;
 var cursorLetter = 0;
 var textLength = 0;
@@ -178,6 +178,21 @@ $(document).ready(function() {
       default: return; // exit this handler for other keys
     }
     // e.preventDefault(); // prevent the default action (scroll / move caret)
+  });
+
+  $(document).click(function(){
+    console.log($(this).parents('._4_j4').length);
+  })
+
+  $(document).on('click', function(e) {
+    console.log("Clicked", e);
+    console.log("Clicked in", e.target.parents('._4_j4').length);
+    if (e.target.parents('._4_j4').length) {
+      $('.blinking-cursor').show();
+    } else {
+      $('.blinking-cursor').hide();
+    }
+    
   });
 
 });
