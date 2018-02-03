@@ -1,5 +1,9 @@
 console.log("Preview code loaded");
 
+const lineHeight = 17;
+const letterWidth = 8.5;
+const padding = 55;
+
 // active should be true iff code inputting formatting selected
 // const active = false;
 // const language;
@@ -26,7 +30,11 @@ $(document).ready(function() {
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
     pre.className = "prettyprint prettyprinted";
+    var cursor = document.createElement('span');
+    cursor.className = "blinking-cursor";
+    cursor.innerHTML = '|'
     $('._5rpb').prepend(pre);
+    $('._5rpb').prepend(cursor);
     format(inputText(), 'js');
   }
 
@@ -39,6 +47,7 @@ $(document).ready(function() {
     var pre = $("#code-preview");
     var formattedCode = PR.prettyPrintOne(code, lang, true);
     pre.html(formattedCode);
+    setCursorPos(1, 0);
   }
 
   // Returns an array on input text one line for each input
@@ -56,6 +65,25 @@ $(document).ready(function() {
     format(inputText(), 'js');
   });
 
-  
+  $('._5rpu').click(function (e) { //Offset mouse Position
+    var posX = $(this).offset().left,
+        posY = $(this).offset().top;
+    var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
+    var letterClicked;
+    if (Math.floor((e.pageX - posX)) < 55) {
+      letterClicked = 0;
+    } else {
+      letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
+    }
+    console.log('Line clicked', lineClicked);
+    console.log('Letter clicked', letterClicked);
+    setCursorPos(lineClicked, letterClicked);
+  });
+
+  function setCursorPos(line, letter) {
+    y = (line - 1) * lineHeight + 3;
+    x = padding + letter * letterWidth;
+    $('.blinking-cursor').css({top: y, left: x});
+  }
 
 });
