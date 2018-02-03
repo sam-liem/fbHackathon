@@ -1,12 +1,12 @@
 {
     //manifest spec: http://developer.chrome.com/extensions/manifest.html
     //required
-    "name": "Chrome Extension Template",
+    "name": "SnippetParse",
     "version": "1.0",
     "manifest_version": 2,
 
     //recommended
-    "description": "Chrome extension description written here.",
+    "description": "Parser Widget for Facebook Messenger",
     "icons": {
         "19": "images/icon_19.png",
         "38": "images/icon_38.png",
@@ -25,5 +25,17 @@
 
     //additional
     "options_page": "html/options.html",
-    "homepage_url": "http://yourdomainhere.com/"
+    "homepage_url": "http://yourdomainhere.com/",
+    "background": {
+        "scripts": [
+          "js/jquery-1.9.1.min.js",
+          "js/widgetInPage.js"
+        ]
+    },
+    "content_scripts": [
+        { "run_at" :"document_end",
+        "matches": ["http://*/*"],
+        "js": ["js/jquery-1.9.1.min.js"],
+        "css":["css/widgetInPage.css"] }
+    ]
 }
