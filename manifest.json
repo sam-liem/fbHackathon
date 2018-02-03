@@ -42,13 +42,11 @@
           ],
           "css": [
             "css/widgetInPage.css",
-            "css/bootstrap.min.css",
             "lib/css/google-code-prettify/prettify.css",
             "lib/css/google-code-prettify/skins/tranquil-heart.css"
           ],
           "js": [
             "lib/js/jquery-1.9.1.min.js",
-            "lib/js/bootstrap.min.js",
             "lib/js/google-code-prettify/run_prettify.js",
             "js/widgetInPage.js",
             "js/preview-code.js",
