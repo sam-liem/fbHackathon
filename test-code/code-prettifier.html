@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Prettifier</title>
+  <!-- Docs: https://github.com/google/code-prettify/blob/master/docs/getting_started.md -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="//cdn.rawgit.com"/>
+  <link rel="stylesheet" type="text/css" href="google-code-prettify/prettify.css">
+  <link rel="stylesheet" type="text/css" href="google-code-prettify/skins/tranquil-heart.css">
+  <script type="text/javascript" src="google-code-prettify/prettify.js"></script>
+</head>
+<body onload="PR.prettyPrint()">
+
+  <!-- use "linenums:4" if code starts at line 4 -->
+  <pre class="prettyprint linenums lang-js">
+    // Voila
+    static const string VOILA = "Voila";
+    function testFunction() {
+      return "Hello World!";
+    }
+  </pre>
+  <pre class="prettyprint linenums lang-html">
+    The lang-* class specifies the language file extensions.
+    File extensions supported by default include:
+      "bsh", "c", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java",
+      "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", "xml",
+      "xsl".
+  </pre>
+
+  <pre class="prettyprint linenums">
+    <code>
+      &lt;script type="text/javascript"&gt;
+      // Say hello world until the user starts questioning
+      // the meaningfulness of their existence.
+      function helloWorld(world) {
+        for (var i = 42; --i >= 0;) {
+          alert('Hello ' + String(world));
+        }
+      }
+      &lt;/script&gt;
+      &lt;style&gt;
+      p { color: pink }
+      b { color: blue }
+      u { color: "umber" }
+      &lt;/style&gt;
+    </code>
+  </pre>
+</body>
+</html>
