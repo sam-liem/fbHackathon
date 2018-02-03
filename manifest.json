@@ -28,7 +28,9 @@
     "homepage_url": "http://yourdomainhere.com/",
     "background": {
         "scripts": [
-          "js/jquery-1.9.1.min.js"
+          "lib/js/jquery-1.9.1.min.js", 
+          "js/renderTex/background.js", 
+          "js/renderTex/options.js"
         ]
     },
     "content_scripts": [
@@ -36,16 +38,19 @@
           "run_at" :"document_end",
           "matches": [
             "https://www.messenger.com/t/*",
-            "https://www.facebook.com/messages/t/*",
-            "https://www.google.co.uk/*"
+            "https://www.facebook.com/messages/t/*"
           ],
           "css": [
-            "css/widgetInPage.css"
+            "css/widgetInPage.css",
+            "lib/css/google-code-prettify/prettify.css",
+            "lib/css/google-code-prettify/skins/tranquil-heart.css"
           ],
           "js": [
-            "js/jquery-1.9.1.min.js",
+            "lib/js/jquery-1.9.1.min.js",
+            "lib/js/google-code-prettify/prettify.js",
             "js/widgetInPage.js",
-            "js/preview-code.js"
+            "js/preview-code.js",
+            "js/renderTex/texify.js"
           ]
         },
 
