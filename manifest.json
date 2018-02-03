@@ -33,9 +33,26 @@
         ]
     },
     "content_scripts": [
-        { "run_at" :"document_end",
-        "matches": ["http://*/*"],
-        "js": ["js/jquery-1.9.1.min.js"],
-        "css":["css/widgetInPage.css"] }
+        {
+          "run_at" :"document_end",
+          "matches": [
+            "https://www.messenger.com/t/*",
+            "http://www.facebook.com/messages/t/*"
+          ],
+          "css": [
+            "css/widgetInPage.css"
+          ],
+          "js": [
+            "js/jquery-1.9.1.min.js",
+            "js/widgetInPage.js",
+            "js/preview-code.js"
+          ]
+        }
+      ],
+      "permissions": [
+        "https://www.messenger.com/t/*",
+        "http://www.facebook.com/messages/t/*",
+        "tabs",
+        "storage"
     ]
 }
