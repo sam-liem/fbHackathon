@@ -79,6 +79,43 @@ $(document).ready(function() {
       
     }
 
+  function loadLatexCopyLinks() {
+    $('annotation[encoding="application/x-tex"]').each(function() {
+    var closestParentDiv = this.closest('div');
+  
+    if (closestParentDiv.getElementsByClassName("latexCopy") != 0) {
+      console.log(closestParentDiv);
+      var originalStr = this.innerHTML;
+      var latexStr = originalStr.replace("\\color{#fff}{", "$$$");
+      latexStr = latexStr.replace(/.$/,"$$$");
+      var a = document.createElement("a");
+      a.innerHTML = "Copy latex";
+      a.className = "latexCopy";
+      a.id = latexStr;
+      closestParentDiv.prepend(a);
+    }
+
+  });
+  }
+
+  loadLatexCopyLinks();
+
+  $(".latexCopy").click(function(event) {
+      var textArea = document.createElement("textarea");
+      textArea.value = event.target.id;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Copying text command was ' + msg);
+      } catch (err) {
+        console.log('Oops, unable to copy');
+      }
+
+      document.body.removeChild(textArea);
+  });
+
     function beginWidget() {
         if(active){
             active = false;
@@ -96,8 +133,10 @@ $(document).ready(function() {
             $(".widgetMenuPreview").on("click",function(){
               if($('#MathDiv').is(':visible')) {
                 $("#mathDiv").hide();
+                $("#preview").hide();
               } else {
                 $("#mathDiv").show();
+                $("#preview").show();
               }
               loadLatexImage();
             });
