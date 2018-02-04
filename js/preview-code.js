@@ -90,8 +90,9 @@ $(document).ready(function() {
 
     function loadLatexImage() {
       var str = document.getElementsByClassName("_1mj")[0].firstChild.firstChild.innerHTML;
-      if (str != "") {
+      if (str.startsWith("$$") && str.endsWith("$$")) {
         $("#preview").show();
+        console.log(str);
         document.getElementById("preview").src = "https://chart.googleapis.com/chart?cht=tx&chl="+str;
       } else {
         $("#preview").hide();
@@ -146,6 +147,19 @@ $(document).ready(function() {
     loadLatexImage();
   });
 
+  $('.widgetMenuForm').change(function(){
+                selected = $("input[name='optradio']:checked").attr('id');
+                $("#mathDiv").hide();
+                $("#preview").hide();
+                // if(selected=='latex'){
+                //     $(".widgetMenuPreview").show();
+                // }else{
+                    
+                // }
+                console.log(selected);
+                //changeInput(selected);
+            });
+
     function beginWidget() {
         if(active){
             active = false;
@@ -160,18 +174,7 @@ $(document).ready(function() {
             
             selected = 'latex';
             
-            $('.widgetMenuForm').change(function(){
-                selected = $("input[name='optradio']:checked").attr('id');
-                $("#mathDiv").hide();
-                $("#preview").hide();
-                // if(selected=='latex'){
-                //     $(".widgetMenuPreview").show();
-                // }else{
-                    
-                // }
-                console.log(selected);
-                //changeInput(selected);
-            });
+            
             console.log("prepended");
             //call preview-code
             $("#widgetMenu").show();
