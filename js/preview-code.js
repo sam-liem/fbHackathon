@@ -1,5 +1,5 @@
 console.log("Preview code loaded");
-
+ 
 const lineHeight = 17;
 const letterWidth = 8.5;
 const padding = 42;
