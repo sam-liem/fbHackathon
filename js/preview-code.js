@@ -97,7 +97,7 @@ $(document).ready(function() {
       if (numberOfLines > inputLines.length) {
         console.log("removed line");
         newCursorLine = cursorLine - 1;
-        newCursorLetter = inputLines[newCursorLine - 1].firstChild.firstChild.innerHTML.length;
+        newCursorLetter = cursorLettersInLine(newCursorLine);
         numberOfLines = inputLines.length;
       }
       // Checks if line added
