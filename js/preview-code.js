@@ -48,7 +48,7 @@ $(document).ready(function() {
   function initializeCursor() {
     var inputLines = $("div._1mf._1mj");
     var line = inputLines.length;
-    var letter = inputLines[line-1].firstChild.firstChild.innerHTML.length;
+    var letter = cursorLettersInLine(line);
     textLength = inputLines.text().length;
     setCursorPos(line, letter);
   }
