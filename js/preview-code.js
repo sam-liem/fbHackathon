@@ -74,8 +74,9 @@ $(document).ready(function() {
                         <label class="radio-inline"><input type="radio" name="optradio" id="py">Python</label>
                         <label class="radio-inline"><input type="radio" name="optradio" id="cpp">C++</label>
                         <label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
+                        <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>
                     </form>
-                    <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>
+                    
                 </div>`
             );
     $("#widgetMenu").hide();
@@ -101,11 +102,11 @@ $(document).ready(function() {
   function loadLatexCopyLinks() {
     $('annotation[encoding="application/x-tex"]').each(function() {
     var closestParentDiv = this.closest('div');
-  
     if (closestParentDiv.getElementsByClassName("latexCopy") != 0) {
       var originalStr = this.innerHTML;
-      var latexStr = originalStr.replace("\\color{#fff}{", "$$$");
-      latexStr = latexStr.replace(/.$/,"$$$");
+      console.log(originalStr);
+      var latexStr = originalStr.replace("\\color{#fff}", "$$");
+      latexStr = latexStr.replace(/.$/,"$$");
       var a = document.createElement("a");
       a.innerHTML = "Copy latex";
       a.className = "latexCopy";
