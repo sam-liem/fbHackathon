@@ -103,6 +103,9 @@ $(document).ready(function() {
 
   function removeCodeEditor() {
     $('._5rpu').first().css({opacity: 1,paddingLeft: "0px"});
+    $('._5irm').css({margin: ""});
+    $('._3-8x._3oh-').css({margin: ""});
+    $('._kmc._2swd.navigationFocus').css({padding: ""});
     $('#code-preview').remove();
     $(".blinking-cursor").remove();
   }
@@ -111,7 +114,9 @@ $(document).ready(function() {
 
   function initialize() {
     $('._5rpu').css({opacity: 0,paddingLeft: "42px"});
+    $('._5irm').css({margin: "0px"});
     $('._3-8x._3oh-').css({margin: "0px"});
+    $('._kmc._2swd.navigationFocus').css({padding: "0px"});
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
     pre.style.padding = "0px";
