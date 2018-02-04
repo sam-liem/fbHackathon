@@ -262,7 +262,7 @@ $(document).ready(function() {
         break;
       case 40: // down
         if (isWrappedLine(line)) {
-          if (cursorLettersInLine(line) - letter < lettersInLine()) {
+          if (letter > numberOfCompleteWraps(line) * lettersInLine()) {
             line++;
             letter = letter % lettersInLine();
           } else {
@@ -287,6 +287,10 @@ $(document).ready(function() {
     setCursorPos(line, letter);
     // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+
+  function numberOfCompleteWraps(lineNum) {
+    return Math.floor(cursorLettersInLine(lineNum) / lettersInLine());
+  }
 
   function lettersInLine() {
     const inputLines = $('._1mf._1mj');
