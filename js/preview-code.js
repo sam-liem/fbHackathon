@@ -67,6 +67,16 @@ $(document).ready(function() {
 			$('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
 			$(".widgetMenuPreview").on("click",function(){
 				console.log("toggled preview");
+				// var data = {};
+				// data.text = "big test";
+				// data.lang = "js";
+				// console.log("POST")
+				// $.ajax({
+				// 	type: 'POST',
+				// 	data: JSON.stringify(data),
+				// 	contentType: 'application/json',
+				// 	url: 'http://localhost:1337/format'
+				// });
 				//togglePreview();
 			});
 
