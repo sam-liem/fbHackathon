@@ -102,13 +102,12 @@ $(document).ready(function() {
   }
 
   function removeCodeEditor() {
-    $('._5rpu').first().css({opacity: 1,paddingLeft:"1.5%"});
+    $('._5rpu').first().css({opacity: 1,paddingLeft: "0px"});
     $('#code-preview').css({display: "none"});
     $(".blinking-cursor").first().css({display: "none"});
     $("._4_j4").first().css({marginBottom: "-10"});
-    $('._5irm').first().css({marginLeft:"12px"});
     var enterField = document.getElementsByClassName('_5irm')[0];
-    enterField.style.marginLeft = "2px";
+    enterField.style.marginLeft = "12px";
     enterField.firstChild.style.backgroundColor = "#ffff";
     enterField.firstChild.style.marginRight = "1%";
   }
