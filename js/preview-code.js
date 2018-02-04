@@ -102,26 +102,19 @@ $(document).ready(function() {
   }
 
   function removeCodeEditor() {
-    $('._5rpu').first().css({opacity: 1,paddingLeft:"1.5%"});
-    $('#code-preview').css({display: "none"});
-    $(".blinking-cursor").first().css({display: "none"});
-    $("._4_j4").first().css({marginBottom: "-10"});
-    $('._5irm').first().css({marginLeft:"12px"});
-    var enterField = document.getElementsByClassName('_5irm')[0];
-    enterField.style.marginLeft = "2px";
-    enterField.firstChild.style.backgroundColor = "#ffff";
-    enterField.firstChild.style.marginRight = "1%";
+    $('._5rpu').first().css({opacity: 1,paddingLeft: "0px"});
+    $('#code-preview').remove();
+    $(".blinking-cursor").remove();
   }
 
   // Must always run on document load for it to work
+
   function initialize() {
     $('._5rpu').css({opacity: 0,paddingLeft: "42px"});
-    var enterField = document.getElementsByClassName('_5irm')[0];
-    enterField.style.marginLeft = "0px";
-    enterField.firstChild.style.backgroundColor = "#303640";
-    enterField.firstChild.style.marginRight = "1%";
+    $('._3-8x._3oh-').css({margin: "0px"});
     var pre = document.createElement('pre');
     pre.setAttribute("id", "code-preview");
+    pre.style.padding = "0px";
     pre.className = "prettyprint prettyprinted";
     var cursor = document.createElement('span');
     cursor.className = "blinking-cursor";
@@ -130,8 +123,6 @@ $(document).ready(function() {
     $('._5rpb').prepend(cursor);
     format(inputText(), selected);
     initializeCursor();
-
-    // removeCodeEditor();
   }
 
   function initializeCursor() {
