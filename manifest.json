@@ -8,17 +8,17 @@
     //recommended
     "description": "Parser Widget for Facebook Messenger",
     "icons": {
-        "19": "images/icon_19.png",
-        "38": "images/icon_38.png",
-        "128": "images/icon_128.png"
+        "19": "images/icon.png",
+        "38": "images/icon.png",
+        "128": "images/icon.png"
     },
 
     //required
     "browser_action": {
         "default_title": "browser_action: default_title",
         "default_icon": {
-            "19": "images/icon_19.png",
-            "38": "images/icon_38.png"
+            "19": "images/icon.png",
+            "38": "images/icon.png"
         },
         "default_popup": "html/main.html"
     },
