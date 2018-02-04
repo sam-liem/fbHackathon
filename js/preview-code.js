@@ -82,10 +82,12 @@ $(document).ready(function() {
     var newCursorLetter = cursorLetter;
     if (inputLines.text().length + 1 == textLength) {
       // letter removed
+      console.log("letter removed");
       newCursorLetter = cursorLetter - 1;
       textLength = inputLines.text().length;
     } else if (inputLines.text().length - 1 == textLength) {
       // letter added
+      console.log("letter added");
       newCursorLetter = cursorLetter + 1;
       textLength = inputLines.text().length;
     }
@@ -110,7 +112,7 @@ $(document).ready(function() {
     // console.log('newTextLength', textLength);
     // console.log('newNumLines', numberOfLines);
 
-    setCursorPos(cursorLine, cursorLetter);
+    setCursorPos(newCursorLine, newCursorLetter);
 
   });
 
@@ -231,20 +233,48 @@ $(document).ready(function() {
     var letter = cursorLetter
     switch(e.which) {
       case 37: // left
-      letter = cursorLetter - 1;
-      break;
+        letter = cursorLetter - 1;
+        break;
       case 38: // up
-      line = cursorLine - 1;
-      break;
+        if (isWrappedLine(line)) {
+          if (letter < lettersInLine()) {
+            line--;
+            if (isWrappedLine(line)) {
+              var lettersInLastLine = cursorLettersInLine(line) % lettersInLine();
+              letter = cursorLettersInLine(line) - lettersInLastLine + letter;
+            }
+          } else {
+            letter -= lettersInLine();
+          }
+        } else {
+          line--;
+          if (isWrappedLine(line)) {
+            var lettersInLastLine = cursorLettersInLine(line) % lettersInLine();
+            letter = cursorLettersInLine(line) - lettersInLastLine + letter;
+          }
+        }
+        if (letter > cursorLettersInLine(line)) {
+          letter = cursorLettersInLine(line);
+        }
+        break;
       case 39: // right
-      letter = cursorLetter + 1;
-      break;
+        letter = cursorLetter + 1;
+        break;
       case 40: // down
-      line = cursorLine + 1;
-      if (letter > cursorLettersInLine(line)) {
-        letter = cursorLettersInLine(line);
-      }
-      break;
+        if (isWrappedLine(line)) {
+          if (cursorLettersInLine(line) - letter < lettersInLine()) {
+            line++;
+            letter = letter % lettersInLine();
+          } else {
+            letter += lettersInLine();
+          }
+        } else {
+          line++;
+        }
+        if (letter > cursorLettersInLine(line)) {
+          letter = cursorLettersInLine(line);
+        }
+        break;
       default: return; // exit this handler for other keys
     }
     if (letter < 0) {
@@ -257,6 +287,24 @@ $(document).ready(function() {
     setCursorPos(line, letter);
     // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+
+  function lettersInLine() {
+    const inputLines = $('._1mf._1mj');
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    return lettersInLine;
+  }
+
+  function isWrappedLine(lineNum) {
+    const inputLines = $('._1mf._1mj');
+    if (lineNum < 1) {
+      lineNum = 1
+    } else if (lineNum > inputLines.length) {
+      lineNume = inputLines.length;
+    }
+    const lineLength = inputLines[lineNum - 1].firstChild.firstChild.innerHTML.length;
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    return lineLength > lettersInLine;
+  }
 
   function cursorLettersInLine(lineNum) {
     const inputLines = $('._1mf._1mj');
