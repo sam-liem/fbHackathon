@@ -236,6 +236,7 @@ $(document).ready(function() {
     textLength = inputLines.text().length;
     numberOfLines = inputLines.length;
     // removeCodeEditor();
+    $('.blinking-cursor').hide();
   }
 
   function initializeCursor() {
