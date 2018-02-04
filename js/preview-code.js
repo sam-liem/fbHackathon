@@ -58,6 +58,7 @@ $(document).ready(function() {
                         <label class="radio-inline"><input type="radio" name="optradio" id="cpp">C++</label>
                         <label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
                     </form>
+                    <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>
                 </div>`
             );
     $("#widgetMenu").hide();
@@ -130,7 +131,7 @@ $(document).ready(function() {
             var textBox = $("._1mf._1mj");
             
             selected = 'latex';
-            $('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
+            // $('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
             $(".widgetMenuPreview").on("click",function(){
               if($('#MathDiv').is(':visible')) {
                 $("#mathDiv").hide();
