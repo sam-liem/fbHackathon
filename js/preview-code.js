@@ -173,9 +173,6 @@ $(document).ready(function() {
     var actualLetter = letter;
     var inputLines = $('._1mf._1mj');
     var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
-    if (actualLetter > lineText.length) {
-      actualLetter = lineText.length;
-    }
     if (line > inputLines.length) {
       line = inputLines.length;
     }
@@ -186,12 +183,13 @@ $(document).ready(function() {
     // Line here is visual line and not actual line
     line += numberOfWrappedLinesToPos(line);
     var lineLength;
+    var totalWraps = 0;
     const lettersInLine = Math.round((inputLines.width()) /letterWidth);
     if (letter == lettersInLine) {
       letter = 0;
       line += 1;
     } else if (wrappedLine = letter > lettersInLine) {
-      const totalWraps = Math.floor(letter/lettersInLine);
+      totalWraps = Math.floor(letter/lettersInLine);
       letter -= totalWraps * lettersInLine;
       line += totalWraps;
       try {
@@ -207,6 +205,10 @@ $(document).ready(function() {
       lineLength = lineText.length;
     }
 
+    if (actualLetter > lineText.length + totalWraps) {
+      actualLetter = lineText.length + totalWraps
+    }
+
     if (letter < 0) {
       letter = 0;
     }
@@ -220,8 +222,8 @@ $(document).ready(function() {
     $('.blinking-cursor').css({top: y, left: x});
     // Update vars
     // These are to be actual line and letter and NOT visual line and letter
-    cursorLine = line;
-    cursorLetter = letter;
+    cursorLine = actualLine;
+    cursorLetter = actualLetter;
   }
 
   $("._5rpu").on('keydown', function(e) {
