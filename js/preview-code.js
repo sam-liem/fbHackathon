@@ -79,36 +79,80 @@ $(document).ready(function() {
     $("._5irm").before(
                 `<div id="widgetMenu" style="display:none">
                     <form class="widgetMenuForm">
-                        <label class="radio-inline"><input type="radio" name="optradio" id="latex" checked>Latex</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="js">Javascript</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="py">Python</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="cpp">C++</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
-                        <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>
+                    <label style="margin-right:20px" class="radio-inline">Try surrounding code with [js] and [/js]!</label>
+                    <label style="margin-left:20px" class="radio-inline">(js</label>
+                    <label class="radio-inline">py</label>
+                    <label class="radio-inline">cpp</label>
+                    <label class="radio-inline">c</label>
+                    <label class="radio-inline">java</label>
+                    <label class="radio-inline">html</label>
+                        <label class="radio-inline">rb</label>
+                        <label class="radio-inline">sh</label>
+                        <label class="radio-inline">perl)</label>
+                        <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview</a>
                     </form>
                     
                 </div>`
             );
+            // "bsh", "c", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java",
+      // "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", "xml",
+      // "xsl".
+
+                    // <label class="radio-inline"><input type="radio" name="optradio" id="js">Javascript(js)</label>
+
+                    //     <label class="radio-inline"><input type="radio" name="optradio" id="latex" checked>Latex</label>
+                        
+                    //     <label class="radio-inline"><input type="radio" name="optradio" id="py">Python(py)</label>
+                    //     <label class="radio-inline"><input type="radio" name="optradio" id="cpp">C++(cpp)</label>
+    // <label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
     $("#widgetMenu").hide();
     $("#widgetMenu").before(
                   // `<div id="MathDiv" style="display:none">
                   //   </div>`
 
-                  `<div id="mathDiv" style="display:none"><img id="preview" src="#"/></div>`
+                  `<div id="mathDiv" style="display:none"><p id="tip">You must begin and end your latex with $$!</p><img id="preview" src="#"/></div>`
                 );
     $("#mathDiv").hide();
 
     function loadLatexImage() {
       var str = document.getElementsByClassName("_1mj")[0].firstChild.firstChild.innerHTML;
       if (str.startsWith("$$") && str.endsWith("$$")) {
-        $("#preview").show();
-        console.log(str);
+        $("#tip").hide();
         document.getElementById("preview").src = "https://chart.googleapis.com/chart?cht=tx&chl="+str;
+        $("#preview").show();
+        
       } else {
+        $("#tip").show();
         $("#preview").hide();
       }
       
     }
+
+  function addTags() {
+    // var line = document.getElementsByClassName("_1mf")[0].firstElementChild;
+    // console.log(line.innerHTML);
+    // var codeRegexPattern = /\[([a-z]*)\]((.|\n)*)\[\/([a-z]*)\]/g;
+    // var match = codeRegexPattern.exec(line);
+    // if (match != null) {
+      
+    //   // messengerBubble.parentNode.style.padding = "0";
+    //   // messengerBubble.parentNode.style.borderRadius = "25px";
+    //   // messengerBubble.innerHTML = '';
+    //   // var language = match[1];
+    //   // var codeStr = match[2];
+
+    //   // var pre = document.createElement('pre');
+    //   // pre.className = "prettyprint prettyprinted";
+    //   // pre.style.padding = "10px";
+    //   // pre.style.borderRadius = "25px";
+    //   // var formattedCode = PR.prettyPrintOne(codeStr, language, true);
+    //   // pre.innerHTML = formattedCode;
+
+    //   // messengerBubble.appendChild(pre);
+    // } else {
+    //   line.innerHTML = "["+selected+"]" + line.innerHTML + "[/"+selected+"]";
+    // }
+  }
 
   function loadLatexCopyLinks() {
     $('annotation[encoding="application/x-tex"]').each(function() {
@@ -155,6 +199,7 @@ $(document).ready(function() {
       $("#preview").show();
     }
     loadLatexImage();
+    addTags();
   });
 
   $('.widgetMenuForm').change(function(){
@@ -183,6 +228,7 @@ $(document).ready(function() {
             var textBox = $("._1mf._1mj");
             
             selected = 'latex';
+            addTags();
             
             
             console.log("prepended");
