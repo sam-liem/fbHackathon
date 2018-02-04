@@ -25,7 +25,24 @@ $(document).ready(function() {
   var active = false;
   var selected = "";
 
-  $(document).keyup(function() {
+  $(document).keyup(function(e) {
+    var key = e.which;
+    if(key == 13 && !e.shiftKey) {
+      if ($(document.activeElement).hasClass("_5rpu")) {
+        console.log("butt");
+        var inputLines = $(document.getElementsByClassName("_5rpu")).children(":first").children();
+        var startingLine = inputLines.eq(0).children(":first").children(":first").;
+        console.log(startingLine.html());
+        startingLine.prepend("[js]");
+        // console.log(inputLines.length);
+        // console.log();
+        // console.log(inputLines.eq(inputLines.length-1).children(":first").children(":first").children(":first").html());
+        var closingLine = inputLines.eq(inputLines.length-1).children(":first").children(":first");
+        console.log(closingLine.html());
+        closingLine.append("[/js]");
+      }
+    }
+
     if (selected == "latex") {
       loadLatexImage();
     }
@@ -57,6 +74,7 @@ $(document).ready(function() {
                         <label class="radio-inline"><input type="radio" name="optradio" id="cpp">C++</label>
                         <label class="radio-inline"><input type="radio" name="optradio" id="raw">Raw Text</label>
                     </form>
+                    <a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>
                 </div>`
             );
     $("#widgetMenu").hide();
@@ -84,7 +102,6 @@ $(document).ready(function() {
     var closestParentDiv = this.closest('div');
   
     if (closestParentDiv.getElementsByClassName("latexCopy") != 0) {
-      console.log(closestParentDiv);
       var originalStr = this.innerHTML;
       var latexStr = originalStr.replace("\\color{#fff}{", "$$$");
       latexStr = latexStr.replace(/.$/,"$$$");
@@ -129,9 +146,8 @@ $(document).ready(function() {
             var textBox = $("._1mf._1mj");
             
             selected = 'latex';
-            $('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
             $(".widgetMenuPreview").on("click",function(){
-              if($('#MathDiv').is(':visible')) {
+              if($('#mathDiv').is(':visible')) {
                 $("#mathDiv").hide();
                 $("#preview").hide();
               } else {
@@ -142,11 +158,13 @@ $(document).ready(function() {
             });
             $('.widgetMenuForm').change(function(){
                 selected = $("input[name='optradio']:checked").attr('id');
-                if(selected=='latex'){
-                    $(".widgetMenuPreview").show();
-                }else{
-                    $(".widgetMenuPreview").hide();
-                }
+                $("#mathDiv").hide();
+                $("#preview").hide();
+                // if(selected=='latex'){
+                //     $(".widgetMenuPreview").show();
+                // }else{
+                    
+                // }
                 console.log(selected);
                 //changeInput(selected);
             });
