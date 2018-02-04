@@ -25,6 +25,12 @@ $(document).ready(function() {
   var active = false;
   var selected = "";
 
+  $(document).keyup(function() {
+    if (selected == "latex") {
+      loadLatexImage();
+    }
+  });
+
     function insertWidget() {
         //get location to insert
         var iconImg = chrome.extension.getURL('images/icon.png');
@@ -42,18 +48,8 @@ $(document).ready(function() {
         });
     }
 
-    function beginWidget() {
-        if(active){
-            active = false;
-            console.log("deactivate");
-            $(".widgetMenu").remove();
-            removeCodeEditor();
-        } else {
-            active = true;
-            console.log("activate");
-            var textBox = $("._1mf._1mj");
-            $("._5irm").before(
-                `<div class="widgetMenu">
+    $("._5irm").before(
+                `<div id="widgetMenu" style="display:none">
                     <form class="widgetMenuForm">
                         <label class="radio-inline"><input type="radio" name="optradio" id="latex" checked>Latex</label>
                         <label class="radio-inline"><input type="radio" name="optradio" id="js">Javascript</label>
@@ -63,13 +59,48 @@ $(document).ready(function() {
                     </form>
                 </div>`
             );
+    $("#widgetMenu").hide();
+    $("#widgetMenu").before(
+                  // `<div id="MathDiv" style="display:none">
+                  //   </div>`
+
+                  `<div id="mathDiv" style="display:none"><img id="preview" src="#"/></div>`
+                );
+    $("#mathDiv").hide();
+
+    function loadLatexImage() {
+      var str = document.getElementsByClassName("_1mj")[0].firstChild.firstChild.innerHTML;
+      if (str != "") {
+        $("#preview").show();
+        document.getElementById("preview").src = "https://chart.googleapis.com/chart?cht=tx&chl="+str;
+      } else {
+        $("#preview").hide();
+      }
+      
+    }
+
+    function beginWidget() {
+        if(active){
+            active = false;
+            console.log("deactivate");
+            $("#widgetMenu").hide();
+            $("#mathDiv").hide();
+            removeCodeEditor();
+        } else {
+            active = true;
+            console.log("activate");
+            var textBox = $("._1mf._1mj");
+            
             selected = 'latex';
             $('.widgetMenuForm').append("<a class=\"widgetMenuPreview\" role=\"button\" href=\"#\">Preview ON/OFF</a>")
             $(".widgetMenuPreview").on("click",function(){
-                console.log("toggled preview");
-                //togglePreview();
+              if($('#MathDiv').is(':visible')) {
+                $("#mathDiv").hide();
+              } else {
+                $("#mathDiv").show();
+              }
+              loadLatexImage();
             });
-
             $('.widgetMenuForm').change(function(){
                 selected = $("input[name='optradio']:checked").attr('id');
                 if(selected=='latex'){
@@ -82,6 +113,7 @@ $(document).ready(function() {
             });
             console.log("prepended");
             //call preview-code
+            $("#widgetMenu").show();
             initialize();
         }
     }
@@ -102,13 +134,12 @@ $(document).ready(function() {
   }
 
   function removeCodeEditor() {
-    $('._5rpu').first().css({opacity: 1,paddingLeft:"1.5%"});
+    $('._5rpu').first().css({opacity: 1,paddingLeft: "0px"});
     $('#code-preview').css({display: "none"});
     $(".blinking-cursor").first().css({display: "none"});
     $("._4_j4").first().css({marginBottom: "-10"});
-    $('._5irm').first().css({marginLeft:"12px"});
     var enterField = document.getElementsByClassName('_5irm')[0];
-    enterField.style.marginLeft = "2px";
+    enterField.style.marginLeft = "12px";
     enterField.firstChild.style.backgroundColor = "#ffff";
     enterField.firstChild.style.marginRight = "1%";
   }
