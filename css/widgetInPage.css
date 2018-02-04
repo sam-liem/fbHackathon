@@ -4,8 +4,12 @@
     margin:20% 0% 0% 20%;
 }
 
-.widgetMenu {
+#widgetMenu {
   width: 100%;
+}
+
+#MathDiv {
+	padding:10px;
 }
 
 .widgetMenuForm {

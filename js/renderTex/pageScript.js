@@ -1,5 +1,5 @@
 function config() {
-  var scriptNode = document.getElementById('texAllTheThingsPageScript');
+  // var scriptNode = document.getElementById('texAllTheThingsPageScript');
   MathJax.Hub.Config({
     showProcessingMessages: false,
     messageStyle: 'none',
