@@ -1,5 +1,6 @@
 // Set the headers to allow the MathJax CDN if we're typesetting this page
 chrome.webRequest.onHeadersReceived.addListener(function(details) {
+  console.log('hello');
     var hostname = get_hostname(details.url);
     if (!should_texify(hostname)) {
       return;

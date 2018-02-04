@@ -1,7 +1,24 @@
-body {
-	!important;
-    background-image: url(images/icon_19.png);
+.snippetParseButton {
     background-repeat: no-repeat;
-    background-size: 61px 1160px;
-    background-color: red;
+    background-size: 60%;
+    margin:20% 0% 0% 20%;
+}
+
+#widgetMenu {
+  width: 100%;
+}
+
+#MathDiv {
+	padding:10px;
+}
+
+.widgetMenuForm {
+  margin-left:auto;
+  margin-right:auto;
+  background-color: rgba(0,0,255,0.2);
+	padding:10px;
+}
+
+.widgetMenuPreview {
+  float: right;
 }
