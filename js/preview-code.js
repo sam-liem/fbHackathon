@@ -233,13 +233,8 @@ $(document).ready(function() {
     return inputs;
   }
 
-<<<<<<< HEAD
   $("._5rpu").on("DOMSubtreeModified",function() {
-    format(inputText(), 'js');
-=======
-  $("._5rpu").on("DOMSubtreeModified",function(){
     format(inputText(), selected);
->>>>>>> 9497ea22573c5f91d6a0cb453fca696a2753b8fa
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
     if (inputLines.text().length == 0) {
@@ -285,12 +280,6 @@ $(document).ready(function() {
 
   });
 
-<<<<<<< HEAD
-  var enterField = document.getElementsByClassName('_5irm')[0];
-  enterField.style.marginLeft = "0px";
-  enterField.firstChild.style.backgroundColor = "#303640";
-  enterField.firstChild.style.marginRight = "1%";
-
   // $('._5rpu').click(function (e) { //Offset mouse Position
   //   var posX = $(this).offset().left,
   //       posY = $(this).offset().top;
@@ -305,18 +294,18 @@ $(document).ready(function() {
   //   console.log("Clicked", lineClicked + ", " + letterClicked);
   //   setCursorPos(lineClicked, letterClicked);
   // });
-=======
-  $('._5rpu').click(function (e) { //Offset mouse Position
-    var posX = $(this).offset().left,
-        posY = $(this).offset().top;
-    var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
-    var letterClicked;
-    if (Math.floor((e.pageX - posX)) < 55) {
-      letterClicked = 0;
-    } else {
-      letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
-    }
->>>>>>> 9497ea22573c5f91d6a0cb453fca696a2753b8fa
+// =======
+//   $('._5rpu').click(function (e) { //Offset mouse Position
+//     var posX = $(this).offset().left,
+//         posY = $(this).offset().top;
+//     var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
+//     var letterClicked;
+//     if (Math.floor((e.pageX - posX)) < 55) {
+//       letterClicked = 0;
+//     } else {
+//       letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
+//     }
+// >>>>>>> 9497ea22573c5f91d6a0cb453fca696a2753b8fa
 
   $('._5rpu').on('click', '._1mf._1mj', function(e) {
     const posX = $(this).offset().left;
@@ -536,14 +525,6 @@ $(document).ready(function() {
   }
 
   $(document).on('click', function(e) {
-<<<<<<< HEAD
-    var elem = document.getElementsByClassName('_4_j4')[0];
-    if (e.target == elem || elem.contains(e.target)) {
-      $('.blinking-cursor').show();
-    } else {
-      $('.blinking-cursor').hide();
-    }
-=======
     if($('.blinking-cursor').first().is(':visible')) {
       var elem = document.getElementsByClassName('_4_j4')[0];
       if (e.target == elem || elem.contains(e.target)) {
@@ -551,8 +532,7 @@ $(document).ready(function() {
       } else {
         $('.blinking-cursor').hide();
       }
-    }    
->>>>>>> 9497ea22573c5f91d6a0cb453fca696a2753b8fa
+    }
   });
 
 });
