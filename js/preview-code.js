@@ -239,7 +239,8 @@ $(document).ready(function() {
     textLength = inputLines.text().length;
     numberOfLines = inputLines.length;
     // removeCodeEditor();
-    $('.blinking-cursor').hide();
+    setTimeout(function(){$('.blinking-cursor').hide();}, 50);
+    
   }
 
   function initializeCursor() {
@@ -536,14 +537,14 @@ $(document).ready(function() {
   }
 
   $(document).on('click', function(e) {
-    if($('.blinking-cursor').first().is(':visible')) {
+    // if($('.blinking-cursor').first().is(':visible')) {
       var elem = document.getElementsByClassName('_4_j4')[0];
       if (e.target == elem || elem.contains(e.target)) {
         $('.blinking-cursor').show();
       } else {
         $('.blinking-cursor').hide();
       }
-    }    
+    // }
   });
 
 });
