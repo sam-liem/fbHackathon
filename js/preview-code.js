@@ -6,7 +6,7 @@ const padding = 42;
 var cursorLine = 1;
 var cursorLetter = 0;
 var textLength = 0;
-var numberOfLines = 0;
+var numberOfLines = 1;
 
 // active should be true iff code inputting formatting selected
 // const active = false;
@@ -31,7 +31,7 @@ $(document).ready(function() {
       if ($(document.activeElement).hasClass("_5rpu")) {
         console.log("butt");
         var inputLines = $(document.getElementsByClassName("_5rpu")).children(":first").children();
-        var startingLine = inputLines.eq(0).children(":first").children(":first").;
+        var startingLine = inputLines.eq(0).children(":first").children(":first");
         console.log(startingLine.html());
         startingLine.prepend("[js]");
         // console.log(inputLines.length);
@@ -218,7 +218,9 @@ $(document).ready(function() {
     $('._5rpb').prepend(cursor);
     format(inputText(), selected);
     initializeCursor();
-
+    var inputLines = $("div._1mf._1mj");
+    textLength = inputLines.text().length;
+    numberOfLines = inputLines.length;
     // removeCodeEditor();
   }
 
@@ -250,18 +252,25 @@ $(document).ready(function() {
     return inputs;
   }
 
-  $("._5rpu").on("DOMSubtreeModified",function(){
-    format(inputText(), selected);
+  $("._5rpu").on("DOMSubtreeModified",function() {
+    format(inputText(), 'js');
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
+    if (inputLines.text().length == 0) {
+      // Message sent (probably)
+      textLength = 0;
+      numberOfLines = 1;
+    }
     var newCursorLine = cursorLine;
     var newCursorLetter = cursorLetter;
     if (inputLines.text().length + 1 == textLength) {
       // letter removed
+      console.log("letter removed");
       newCursorLetter = cursorLetter - 1;
       textLength = inputLines.text().length;
     } else if (inputLines.text().length - 1 == textLength) {
       // letter added
+      console.log("letter added");
       newCursorLetter = cursorLetter + 1;
       textLength = inputLines.text().length;
     }
@@ -271,7 +280,7 @@ $(document).ready(function() {
       if (numberOfLines > inputLines.length) {
         console.log("removed line");
         newCursorLine = cursorLine - 1;
-        newCursorLetter = inputLines[newCursorLine - 1].firstChild.firstChild.innerHTML.length;
+        newCursorLetter = cursorLettersInLine(newCursorLine);
         numberOfLines = inputLines.length;
       }
       // Checks if line added
@@ -283,76 +292,229 @@ $(document).ready(function() {
       }
     }
 
-    // Update vars
-    cursorLine = newCursorLine;
-    cursorLetter = newCursorLetter;
-
     // console.log('newTextLength', textLength);
-    console.log('newNumLines', numberOfLines);
+    // console.log('newNumLines', numberOfLines);
 
-    setCursorPos(cursorLine, cursorLetter);
+    setCursorPos(newCursorLine, newCursorLetter);
 
   });
 
-  $('._5rpu').click(function (e) { //Offset mouse Position
-    var posX = $(this).offset().left,
-        posY = $(this).offset().top;
-    var lineClicked = Math.floor(((e.pageY - posY) / lineHeight) + 1);
-    var letterClicked;
-    if (Math.floor((e.pageX - posX)) < 55) {
-      letterClicked = 0;
-    } else {
-      letterClicked = Math.floor(((e.pageX - posX) - padding + (letterWidth/2) ) / letterWidth);
-    }
+  $('._5rpu').on('click', '._1mf._1mj', function(e) {
+    const posX = $(this).offset().left;
+    const posY = $(this).offset().top;
 
+    const lineClicked = $('._1mf._1mj').index($(this)) + 1;
+    var letterClicked = Math.floor(((e.pageX - posX) + (letterWidth/2) ) / letterWidth);
+    if ((e.pageY - posY) > lineHeight) {
+      // wrappedLine
+      const wrappedLine = Math.floor((e.pageY - posY) / lineHeight);
+      const lettersInLine = Math.round($(this).width()/letterWidth);
+      letterClicked += lettersInLine * wrappedLine;
+    }
     setCursorPos(lineClicked, letterClicked);
   });
 
+  function numberOfWrappedLinesToPos(x) {
+    var res = 0;
+    const inputLines = $('._1mf._1mj');
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    inputLines.each(function(index) {
+      if (index < x - 1) {
+        const textLength = $(this).text().length;
+        const wrappedLine = textLength > lettersInLine;
+        if (wrappedLine) {
+          const totalWraps = Math.floor(textLength/lettersInLine);
+          res += totalWraps;
+        }
+      }
+    });
+    return res;
+  }
+
   function setCursorPos(line, letter) {
+    // console.log(line, letter);
+    console.log("Attempting to move cursor to", line + ", " + letter);
+    const actualLine = line;
+    var actualLetter = letter;
     var inputLines = $('._1mf._1mj');
+    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
     if (line > inputLines.length) {
       line = inputLines.length;
     }
     if (line < 1) {
       line = 1;
     }
-    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
-    if (letter > lineText.length) {
-      letter = lineText.length;
+
+    // Line here is visual line and not actual line
+    line += numberOfWrappedLinesToPos(line);
+    var lineLength;
+    var totalWraps = 0;
+    const lettersInLine = Math.round((inputLines.width()) /letterWidth);
+    if (letter == lettersInLine) {
+      letter = 0;
+      line += 1;
+    } else if (wrappedLine = letter > lettersInLine) {
+      totalWraps = Math.floor(letter/lettersInLine);
+      letter -= totalWraps * lettersInLine;
+      line += totalWraps;
+      try {
+        lineLength = lineText.length - totalWraps * (lettersInLine - 1);
+        if (lineLength > lettersInLine) {
+          lineLength = lettersInLine;
+        }
+      } catch(e) {
+        console.log('input is null', inputLines);
+        console.log('line num', line);
+      }
+    } else {
+      lineLength = lineText.length;
     }
+
+    if (actualLetter > lineText.length + totalWraps) {
+      actualLetter = lineText.length + totalWraps
+    }
+
     if (letter < 0) {
       letter = 0;
     }
+    if (letter > lineLength) {
+      letter = lineLength;
+    }
 
-    // Update vars
-    cursorLine = line;
-    cursorLetter = letter;
-
-    y = (line - 1) * lineHeight + 3;
-    x = padding + letter * letterWidth;
+    y = (line - 1) * lineHeight + 2;
+    x = padding + letter * letterWidth - 1;
+    console.log("Moving cursor to", y + ", " + x);
     $('.blinking-cursor').css({top: y, left: x});
+    // Update vars
+    // These are to be actual line and letter and NOT visual line and letter
+    cursorLine = actualLine;
+    cursorLetter = actualLetter;
   }
 
-
-
   $("._5rpu").on('keydown', function(e) {
+    var line = cursorLine;
+    var letter = cursorLetter
     switch(e.which) {
       case 37: // left
-      setCursorPos(cursorLine, cursorLetter - 1);
-      break;
+        letter = cursorLetter - 1;
+        break;
       case 38: // up
-      setCursorPos(cursorLine - 1, cursorLetter);
-      break;
+        if (isWrappedLine(line)) {
+          if (letter < lettersInLine()) {
+            line--;
+            if (isWrappedLine(line)) {
+              var lettersInLastLine = cursorLettersInLine(line) % lettersInLine();
+              letter = cursorLettersInLine(line) - lettersInLastLine + letter;
+            }
+          } else {
+            letter -= lettersInLine();
+          }
+        } else {
+          line--;
+          if (isWrappedLine(line)) {
+            var lettersInLastLine = cursorLettersInLine(line) % lettersInLine();
+            letter = cursorLettersInLine(line) - lettersInLastLine + letter;
+          }
+        }
+        if (letter > cursorLettersInLine(line)) {
+          letter = cursorLettersInLine(line);
+        }
+        break;
       case 39: // right
-      setCursorPos(cursorLine, cursorLetter + 1);
-      break;
+        letter = cursorLetter + 1;
+        break;
       case 40: // down
-      setCursorPos(cursorLine + 1, cursorLetter);
-      break;
+        if (isWrappedLine(line)) {
+          if (letter > numberOfCompleteWraps(line) * lettersInLine()) {
+            line++;
+            letter = letter % lettersInLine();
+          } else {
+            letter += lettersInLine();
+          }
+        } else {
+          line++;
+        }
+        if (letter > cursorLettersInLine(line)) {
+          letter = cursorLettersInLine(line);
+        }
+        break;
       default: return; // exit this handler for other keys
     }
+    if (letter < 0) {
+      line--;
+      letter = cursorLettersInLine(line);
+    } else if (letter > cursorLettersInLine(line)) {
+      line++;
+      letter = 0;
+    }
+    setCursorPos(line, letter);
     // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+
+  function numberOfCompleteWraps(lineNum) {
+    return Math.floor(cursorLettersInLine(lineNum) / lettersInLine());
+  }
+
+  function lettersInLine() {
+    const inputLines = $('._1mf._1mj');
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    return lettersInLine;
+  }
+
+  function isWrappedLine(lineNum) {
+    const inputLines = $('._1mf._1mj');
+    if (lineNum < 1) {
+      lineNum = 1
+    } else if (lineNum > inputLines.length) {
+      lineNume = inputLines.length;
+    }
+    const lineLength = inputLines[lineNum - 1].firstChild.firstChild.innerHTML.length;
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    return lineLength > lettersInLine;
+  }
+
+  function cursorLettersInLine(lineNum) {
+    const inputLines = $('._1mf._1mj');
+    const lineLength = inputLines[lineNum - 1].firstChild.firstChild.innerHTML.length;
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    const totalWraps = Math.floor(lineLength/lettersInLine);
+    return lineLength + totalWraps;
+  }
+
+  // Highlight
+  // $('._5rpb').on('mousedown', function(e) {
+  //   removeAllHighlights();
+  //   var posX = $(this).offset().left;
+  //   var posY = $(this).offset().top;
+  //   const initX = e.pageX - posX;
+  //   const initY = e.pageY - posY;
+  //   console.log("Highlight");
+  //   var highlight = document.createElement('div');
+  //   highlight.className = "highlight";
+  //   var coords = coordsToTextKeyPoint(initX, initY);
+  //   highlight.style.left = coords.x+'px';
+  //   highlight.style.top = coords.y+'px';
+  //   $(this).prepend(highlight);
+  //   $(this).bind( "mousemove", function(e) {
+  //     console.log("Mouse move", e);
+  //     var coords = coordsToTextKeyPoint(x, y);
+  //     var width = initX - coords.x;
+  //     // var height = initY - coords.y;
+  //   });
+  //   // $(this).on('mouseup', function(e) {
+  //   //   $( this ).unbind(e);
+  //   // });
+  // });
+
+  function removeAllHighlights() {
+    $('.highlight').remove();
+  }
+
+  function coordsToTextKeyPoint(x, y) {
+    x = x - ((x - padding) % letterWidth)
+    y = y - y % lineHeight;
+    return {x: x, y: y};
+  }
 
   $(document).on('click', function(e) {
     if($('.blinking-cursor').first().is(':visible')) {
