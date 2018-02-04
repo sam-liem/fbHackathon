@@ -227,23 +227,44 @@ $(document).ready(function() {
   }
 
   $("._5rpu").on('keydown', function(e) {
+    var line = cursorLine;
+    var letter = cursorLetter
     switch(e.which) {
       case 37: // left
-      setCursorPos(cursorLine, cursorLetter - 1);
+      letter = cursorLetter - 1;
       break;
       case 38: // up
-      setCursorPos(cursorLine - 1, cursorLetter);
+      line = cursorLine - 1;
       break;
       case 39: // right
-      setCursorPos(cursorLine, cursorLetter + 1);
+      letter = cursorLetter + 1;
       break;
       case 40: // down
-      setCursorPos(cursorLine + 1, cursorLetter);
+      line = cursorLine + 1;
+      if (letter > cursorLettersInLine(line)) {
+        letter = cursorLettersInLine(line);
+      }
       break;
       default: return; // exit this handler for other keys
     }
+    if (letter < 0) {
+      line--;
+      letter = cursorLettersInLine(line);
+    } else if (letter > cursorLettersInLine(line)) {
+      line++;
+      letter = 0;
+    }
+    setCursorPos(line, letter);
     // e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+
+  function cursorLettersInLine(lineNum) {
+    const inputLines = $('._1mf._1mj');
+    const lineLength = inputLines[lineNum - 1].firstChild.firstChild.innerHTML.length;
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    const totalWraps = Math.floor(lineLength/lettersInLine);
+    return lineLength + totalWraps;
+  }
 
   $(document).on('click', function(e) {
     var elem = document.getElementsByClassName('_4_j4')[0];
