@@ -50,7 +50,7 @@
             "lib/js/jquery-1.9.1.min.js",
             "lib/js/google-code-prettify/prettify.js",
             "js/preview-code.js",
-            "js/widgetInPage.js",
+            // "js/widgetInPage.js",
             "js/renderCode/codify.js",
             "js/renderTex/texify.js"
           ]
