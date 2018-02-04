@@ -44,6 +44,16 @@ $(document).ready(function() {
     //   }
     // }
 
+    var key = e.which;
+    if(key == 13 && !e.shiftKey) {
+      // reset vars on send
+      console.log("Reset vars on send");
+      cursorLine = 1;
+      cursorLetter = 0;
+      textLength = 0;
+      numberOfLines = 1;
+    }
+
     if (selected == "latex") {
       loadLatexImage();
     }
@@ -259,11 +269,11 @@ $(document).ready(function() {
     format(inputText(), 'js');
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
-    if (inputLines.text().length == 0) {
-      // Message sent (probably)
-      textLength = 0;
-      numberOfLines = 1;
-    }
+    // if (inputLines.text().length == 0) {
+    //   // Message sent (probably)
+    //   textLength = 0;
+    //   numberOfLines = 1;
+    // }
     var newCursorLine = cursorLine;
     var newCursorLetter = cursorLetter;
     if (inputLines.text().length + 1 == textLength) {
@@ -386,12 +396,13 @@ $(document).ready(function() {
 
     y = (line - 1) * lineHeight + 2;
     x = padding + letter * letterWidth - 1;
-    console.log("Moving cursor to", y + ", " + x);
+    console.log("Moving cursor to visual pos", y + ", " + x);
     $('.blinking-cursor').css({top: y, left: x});
     // Update vars
     // These are to be actual line and letter and NOT visual line and letter
     cursorLine = actualLine;
     cursorLetter = actualLetter;
+    console.log("Moving cursor to actual pos", cursorLine + ", " + cursorLetter);
   }
 
   $("._5rpu").on('keydown', function(e) {
