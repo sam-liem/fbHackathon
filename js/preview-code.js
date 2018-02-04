@@ -323,6 +323,41 @@ $(document).ready(function() {
     return lineLength + totalWraps;
   }
 
+  // Highlight
+  $('._5rpb').on('mousedown', function(e) {
+    removeAllHighlights();
+    var posX = $(this).offset().left;
+    var posY = $(this).offset().top;
+    const initX = e.pageX - posX;
+    const initY = e.pageY - posY;
+    console.log("Highlight");
+    var highlight = document.createElement('div');
+    highlight.className = "highlight";
+    var coords = coordsToTextKeyPoint(initX, initY);
+    highlight.style.left = coords.x+'px';
+    highlight.style.top = coords.y+'px';
+    $(this).prepend(highlight);
+    $(this).bind( "mousemove", function(e) {
+      console.log("Mouse move", e);
+      var coords = coordsToTextKeyPoint(x, y);
+      var width = initX - coords.x;
+      // var height = initY - coords.y;
+    });
+    // $(this).on('mouseup', function(e) {
+    //   $( this ).unbind(e);
+    // });
+  });
+
+  function removeAllHighlights() {
+    $('.highlight').remove();
+  }
+
+  function coordsToTextKeyPoint(x, y) {
+    x = x - ((x - padding) % letterWidth)
+    y = y - y % lineHeight;
+    return {x: x, y: y};
+  }
+
   $(document).on('click', function(e) {
     var elem = document.getElementsByClassName('_4_j4')[0];
     if (e.target == elem || elem.contains(e.target)) {
