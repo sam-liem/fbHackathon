@@ -25,6 +25,19 @@
   font-weight: bold;
 }
 
+#code-preview li.L0,
+#code-preview li.L1,
+#code-preview li.L2,
+#code-preview li.L3,
+#code-preview li.L4,
+#code-preview li.L5,
+#code-preview li.L6,
+#code-preview li.L7,
+#code-preview li.L8,
+#code-preview li.L9 {
+  padding-right: 8px;
+}
+
 /*Blinking cursor*/
 @keyframes "blink" {
   from, to {

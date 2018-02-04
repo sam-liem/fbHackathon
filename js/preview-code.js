@@ -3,6 +3,7 @@ console.log("Preview code loaded");
 const lineHeight = 17;
 const letterWidth = 8.4;
 const padding = 42;
+const rightPadding = 8;
 var cursorLine = 1;
 var cursorLetter = 0;
 var textLength = 0;
@@ -73,7 +74,7 @@ $(document).ready(function() {
     return inputs;
   }
 
-  $("._5rpu").on("DOMSubtreeModified",function(){
+  $("._5rpu").on("DOMSubtreeModified",function() {
     format(inputText(), 'js');
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
@@ -106,12 +107,8 @@ $(document).ready(function() {
       }
     }
 
-    // Update vars
-    cursorLine = newCursorLine;
-    cursorLetter = newCursorLetter;
-
     // console.log('newTextLength', textLength);
-    console.log('newNumLines', numberOfLines);
+    // console.log('newNumLines', numberOfLines);
 
     setCursorPos(cursorLine, cursorLetter);
 
@@ -142,38 +139,90 @@ $(document).ready(function() {
     const posY = $(this).offset().top;
 
     const lineClicked = $('._1mf._1mj').index($(this)) + 1;
-    const letterClicked = Math.floor(((e.pageX - posX) + (letterWidth/2) ) / letterWidth);
-
-    console.log("Clicked", lineClicked + ", " + letterClicked);
+    var letterClicked = Math.floor(((e.pageX - posX) + (letterWidth/2) ) / letterWidth);
+    if ((e.pageY - posY) > lineHeight) {
+      // wrappedLine
+      const wrappedLine = Math.floor((e.pageY - posY) / lineHeight);
+      const lettersInLine = Math.round($(this).width()/letterWidth);
+      letterClicked += lettersInLine * wrappedLine;
+    }
     setCursorPos(lineClicked, letterClicked);
-  })
+  });
+
+  function numberOfWrappedLinesToPos(x) {
+    var res = 0;
+    const inputLines = $('._1mf._1mj');
+    const lettersInLine = Math.round(inputLines.width()/letterWidth);
+    inputLines.each(function(index) {
+      if (index < x - 1) {
+        const textLength = $(this).text().length;
+        const wrappedLine = textLength > lettersInLine;
+        if (wrappedLine) {
+          const totalWraps = Math.floor(textLength/lettersInLine);
+          res += totalWraps;
+        }
+      }
+    });
+    return res;
+  }
 
   function setCursorPos(line, letter) {
+    // console.log(line, letter);
+    console.log("Attempting to move cursor to", line + ", " + letter);
+    const actualLine = line;
+    var actualLetter = letter;
     var inputLines = $('._1mf._1mj');
+    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
+    if (actualLetter > lineText.length) {
+      actualLetter = lineText.length;
+    }
     if (line > inputLines.length) {
       line = inputLines.length;
     }
     if (line < 1) {
       line = 1;
     }
-    var lineText = inputLines[line - 1].firstChild.firstChild.innerHTML;
-    if (letter > lineText.length) {
-      letter = lineText.length;
+
+    // Line here is visual line and not actual line
+    line += numberOfWrappedLinesToPos(line);
+    var lineLength;
+    const lettersInLine = Math.round((inputLines.width()) /letterWidth);
+    if (letter == lettersInLine) {
+      letter = 0;
+      line += 1;
+    } else if (wrappedLine = letter > lettersInLine) {
+      const totalWraps = Math.floor(letter/lettersInLine);
+      letter -= totalWraps * lettersInLine;
+      line += totalWraps;
+      try {
+        lineLength = lineText.length - totalWraps * (lettersInLine - 1);
+        if (lineLength > lettersInLine) {
+          lineLength = lettersInLine;
+        }
+      } catch(e) {
+        console.log('input is null', inputLines);
+        console.log('line num', line);
+      }
+    } else {
+      lineLength = lineText.length;
     }
+
     if (letter < 0) {
       letter = 0;
     }
+    if (letter > lineLength) {
+      letter = lineLength;
+    }
 
+    y = (line - 1) * lineHeight + 2;
+    x = padding + letter * letterWidth - 1;
+    console.log("Moving cursor to", y + ", " + x);
+    $('.blinking-cursor').css({top: y, left: x});
     // Update vars
+    // These are to be actual line and letter and NOT visual line and letter
     cursorLine = line;
     cursorLetter = letter;
-
-    y = (line - 1) * lineHeight + 3;
-    x = padding + letter * letterWidth - 1;
-    $('.blinking-cursor').css({top: y, left: x});
   }
-
-
 
   $("._5rpu").on('keydown', function(e) {
     switch(e.which) {
@@ -200,7 +249,7 @@ $(document).ready(function() {
       $('.blinking-cursor').show();
     } else {
       $('.blinking-cursor').hide();
-    }    
+    }
   });
 
 });
