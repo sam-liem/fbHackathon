@@ -78,6 +78,11 @@ $(document).ready(function() {
     format(inputText(), 'js');
     // Checks if letter was added or remove
     var inputLines = $('._1mf._1mj');
+    if (inputLines.text().length == 0) {
+      // Message sent (probably)
+      textLength = 0;
+      numberOfLines = 1;
+    }
     var newCursorLine = cursorLine;
     var newCursorLetter = cursorLetter;
     if (inputLines.text().length + 1 == textLength) {
